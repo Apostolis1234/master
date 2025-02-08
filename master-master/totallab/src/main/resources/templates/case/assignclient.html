@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${course.title}"></title>
+</head>
+<body>
+
+<div layout:fragment="main-content">
+  <p th:text="'assign Client to  '+ ${case.title}"></p>
+
+  <form action="#" th:action="@{/assignclient/{id}(id=${case.id})}" method="post">
+    <h3>Assign Client to Case: <span th:text="${case.name}"></span></h3>
+
+    <label for="clientSelect">Select a Client:</label>
+    <select id="clientSelect" name="client">
+      <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+    </select>
+
+    <button type="submit">Assign Client</button>
+  </form>
+
+  <form action="#" th:action="@{/case/clientassign/{cid}(cid=${case.getId()})}" th:object="${case}"
+        method="post">
+    <select name="client">
+      <option th:each="client : ${clients}"
+              th:value="${client.getId()}"
+              th:text="${client.getFirstName() + ' ' +client.getLastName()}"></option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+</div>
+</html>
